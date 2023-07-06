@@ -1,4 +1,4 @@
-package com.lazylibs.webviewer;
+package com.lazylibs.weber;
 
 import android.app.Activity;
 import android.content.res.Resources;

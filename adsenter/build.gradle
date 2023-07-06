@@ -18,11 +18,11 @@ android {
 }
 
 dependencies {
-//    implementation 'com.lazylibs:adser:0.0.1-SNAPSHOT'
     implementation project(':adser')
     implementation project(':weber')
     implementation project(':widget')
     implementation project(':utils')
+//    implementation 'com.lazylibs:adser:0.0.1-SNAPSHOT'
 //    implementation 'com.lazylibs:weber:0.0.1-20230703.131746-9'
 //    implementation 'com.lazylibs:widget:0.0.1-20230703.094206-2'
 //    implementation 'com.lazylibs:utils:0.0.1-SNAPSHOT'

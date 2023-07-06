@@ -7,7 +7,7 @@ import android.content.Intent;
 import com.lazylibs.adsenter.Enter;
 import com.lazylibs.adsenter.Patos;
 import com.lazylibs.adser.Adser;
-import com.lazylibs.webviewer.LazyWebActivity;
+import com.lazylibs.weber.LazyWebActivity;
 
 public class App extends Application {
     @Override

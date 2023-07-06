@@ -89,18 +89,4 @@ public class Enter extends Activity {
     protected static void setAgreePatos(Context context) {
         context.getSharedPreferences("settings", Context.MODE_PRIVATE).edit().putBoolean(SP_KEY_IS_AGREE_PATOS, true).apply();
     }
-
-    public static int dp(Context context, float dpValue) {
-        // 获取设备屏幕的密度比例因子
-        float scale = context.getResources().getDisplayMetrics().density;
-        // 将dp值转换为像素值
-        return (int) (dpValue * scale + 0.5f);
-    }
-
-    public static void quitFullScreen(Window window) {
-        final WindowManager.LayoutParams attrs = window.getAttributes();
-        attrs.flags &= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        window.setAttributes(attrs);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-    }
 }

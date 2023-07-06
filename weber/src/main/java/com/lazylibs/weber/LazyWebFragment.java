@@ -1,4 +1,4 @@
-package com.lazylibs.webviewer;
+package com.lazylibs.weber;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import androidx.activity.result.ActivityResultCaller;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 
 import java.util.HashMap;
 
@@ -63,7 +64,7 @@ public class LazyWebFragment extends Fragment {
                 if (!firstLoadOver) {
                     firstLoadOver = true;
                     // handle first loaded...
-                    requireView().findViewById(R.id.loading_container).setVisibility(View.GONE);
+                    requireView().findViewById(com.lazylibs.widget.R.id.loading_container).setVisibility(View.GONE);
                 }
                 if (extraWebHandler != null) {
                     extraWebHandler.doProgressed(url);

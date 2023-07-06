@@ -1,12 +1,15 @@
 apply plugin: 'com.android.library'
-apply from: '../maven.gradle'
+
+//apply from: '../maven.gradle'
 //apply from: '../signing.gradle'
 
 android {
-    namespace 'com.lazylibs.weber'
+    namespace 'com.lazylibs.http'
     compileSdk 33
+
     defaultConfig {
         minSdk 21
+        targetSdk 33
         consumerProguardFiles "consumer-rules.pro"
     }
     compileOptions {
@@ -16,9 +19,6 @@ android {
 }
 
 dependencies {
-    implementation project(':widget')
-    implementation project(':utils')
-//    implementation 'com.lazylibs:widget:0.0.1-20230703.094206-2'
-//    implementation 'com.lazylibs:utils:0.0.1-SNAPSHOT'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
+    implementation 'androidx.annotation:annotation:1.6.0'
 }

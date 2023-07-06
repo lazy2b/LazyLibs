@@ -1,7 +1,6 @@
-package com.lazylibs.webviewer;
+package com.lazylibs.weber;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Build;
 import android.util.Log;
 import android.webkit.WebChromeClient;

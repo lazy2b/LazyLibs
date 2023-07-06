@@ -1,4 +1,4 @@
-package com.lazylibs.webviewer;
+package com.lazylibs.weber;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -5,15 +5,14 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lazylibs.utils.FragmentUtils;
-import com.lazylibs.webviewer.IWebHandler;
-import com.lazylibs.webviewer.LazyWebFragment;
+import com.lazylibs.weber.IWebHandler;
+import com.lazylibs.weber.LazyWebFragment;
 
 public class Patos extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class Patos extends AppCompatActivity {
         setContentView(viewFlipper);
 //        viewFlipper.setInAnimation(AnimationUtils.loadAnimation(viewFlipper.getContext(), R.anim.push_left_in));
 //        viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(viewFlipper.getContext(), R.anim.push_right_out));
-        vLoading = LayoutInflater.from(this).inflate(R.layout.tpl_loading, viewFlipper, false);
+        vLoading = LayoutInflater.from(this).inflate(com.lazylibs.widget.R.layout.tpl_loading, viewFlipper, false);
         if (Enter.isAgreePatos(this)) {
             v2Main();
         } else {

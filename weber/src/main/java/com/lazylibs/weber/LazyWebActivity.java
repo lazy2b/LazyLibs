@@ -1,11 +1,10 @@
-package com.lazylibs.webviewer;
+package com.lazylibs.weber;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.webkit.JavascriptInterface;
 
 import androidx.appcompat.app.AppCompatActivity;
 

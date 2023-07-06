@@ -4,7 +4,7 @@
     <application>
         <activity
             android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:name="com.lazylibs.webviewer.LazyWebActivity"
+            android:name="com.lazylibs.weber.LazyWebActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>
