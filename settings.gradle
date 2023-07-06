@@ -14,5 +14,9 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Lazylibs"
 include ':app'
-//include ':utils'
-//include ':widget'
+include ':utils'
+include ':widget'
+include ':adsenter'
+include ':adser'
+include ':adsinstaller'
+include ':weber'
