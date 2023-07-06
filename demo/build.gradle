@@ -40,7 +40,9 @@ dependencies {
     implementation project(':weber')
     implementation project(':adsenter')
     implementation project(':adser')
+    implementation project(':http')
 //    implementation 'com.lazylibs:weber:0.0.1-20230703.131746-9'
+    implementation 'com.squareup.okhttp3:okhttp:4.10.0'
     implementation 'com.airbnb.android:lottie:6.0.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'

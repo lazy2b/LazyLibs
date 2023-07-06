@@ -1,19 +1,30 @@
 package com.lazylibs.demo;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
+
+import androidx.annotation.Nullable;
 
 import com.lazylibs.adsenter.Enter;
 import com.lazylibs.adsenter.Patos;
-import com.lazylibs.adser.Adser;
+import com.lazylibs.http.SimpleOkHttp;
 import com.lazylibs.weber.LazyWebActivity;
 
-public class App extends Application {
+public class App extends Adapts {
+    @Override
+    protected String AdsToken() {
+        return "bn2v0eblh3wg";
+    }
+
+    interface ISettings{
+        String getPatos();
+        String getAdsToken();
+        String settingsUrl();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
-        Adser.onCreate(this, "bn2v0eblh3wg");
         Enter.onCreate(new Enter.ISkipper() {
             @Override
             public void adsed(Activity activity, boolean isAdser) {
@@ -36,12 +47,26 @@ public class App extends Application {
                 return "https://bing.com";//"必须同意，不同意不给玩哦";//"https://bing.com";
             }
         });
+        SimpleOkHttp simpleOkHttp = new SimpleOkHttp() {
+            @Override
+            public void onSuccess(String data) {
+                super.onSuccess(data);
+                try {
+//                    U u = JSON.parseObject(data, U.class);
+//                    if (u != null) {
+//                        Us.icu(u);
+//                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        simpleOkHttp.get("du");
     }
 
     @Override
     public void onTerminate() {
         super.onTerminate();
-        Adser.onTerminate(this);
         Enter.onTerminate();
     }
 }
