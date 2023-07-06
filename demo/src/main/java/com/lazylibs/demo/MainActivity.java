@@ -1,10 +1,11 @@
-package com.lazylibs.installer;
+package com.lazylibs.demo;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.lazylibs.installer.databinding.ActivityMainBinding;
+import com.lazylibs.demo.databinding.ActivityMainBinding;
+
 
 public class MainActivity extends AppCompatActivity {
 

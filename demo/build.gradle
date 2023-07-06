@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.lazylibs.installer'
+    namespace 'com.lazylibs.demo'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.lazylibs.installer"
+        applicationId "com.lazylibs.demo"
         minSdk 24
         targetSdk 33
         versionCode 1
@@ -37,9 +37,10 @@ task comps {
 
 dependencies {
 //    implementation 'com.lazylibs:adser:0.0.1-SNAPSHOT'
-    implementation 'com.lazylibs:weber:0.0.1-20230703.131746-9'
+    implementation project(':weber')
     implementation project(':adsenter')
     implementation project(':adser')
+//    implementation 'com.lazylibs:weber:0.0.1-20230703.131746-9'
     implementation 'com.airbnb.android:lottie:6.0.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'

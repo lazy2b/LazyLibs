@@ -1,4 +1,4 @@
-package com.lazylibs.installer;
+package com.lazylibs.demo;
 
 import android.app.Activity;
 import android.app.Application;

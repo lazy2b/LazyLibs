@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
-        android:name=".App"
+        android:name="com.lazylibs.demo.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vbase">
         <activity
-            android:name=".MainActivity"
+            android:name="com.lazylibs.demo.MainActivity"
             android:exported="true" />
     </application>
 

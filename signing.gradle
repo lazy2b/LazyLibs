@@ -1,0 +1,13 @@
+apply plugin: 'signing'
+
+tasks.withType(Sign) {
+    notCompatibleWithConfigurationCache("https://github.com/gradle/gradle/issues/13470")
+}
+
+afterEvaluate {
+    signing {
+        publishing.publications.all { publication ->
+            sign publication
+        }
+    }
+}
