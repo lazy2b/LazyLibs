@@ -26,10 +26,10 @@ public enum Adser {
     private final MutableLiveData<AdsResult> _liveData = new LazyLiveData<>(this::fetchAdser);
 
     private LiveData<AdsResult> fetchAdser() {
-        if(channel!=null){
+        if (channel != null) {
             return new MutableLiveData<>(channel.adsResult());
         }
-        return new MutableLiveData<>(null);
+        return new MutableLiveData<>(new AdsResult(false, false));
     }
 
     public boolean isAdser() {

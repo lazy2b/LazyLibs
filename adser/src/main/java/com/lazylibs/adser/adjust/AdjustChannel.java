@@ -5,7 +5,6 @@ import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -67,14 +66,13 @@ public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
         });
         config.setOnDeeplinkResponseListener(uri -> true);
         config.setOnAttributionChangedListener(attribution -> {
-            Adser.logD("AdjustChannel.onAttributionChanged():"+attribution);
             if (attribution != null) {
                 Adser.CORE.update(new AdsResult(true, isAdser(attribution)));
             }
         });
         config.setLogLevel(debug ? LogLevel.VERBOSE : LogLevel.ERROR);
-        Adser.logD("AdjustChannel.onCreate():");
         Adjust.onCreate(config);
+        Adjust.getAttribution();
         register(app);
     }
 
@@ -102,17 +100,16 @@ public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
         if (fbInstallReferrer != null && (fbInstallReferrer.trim().startsWith("{") || fbInstallReferrer.trim().startsWith("["))) {
             try {
                 JSONObject fbObj = new JSONObject(attribution.fbInstallReferrer);
-                Log.d("Lazy.Adser", fbObj.toString());
+                Adser.logD(fbObj.toString());
                 return true;
             } catch (JSONException e) {
-                Log.d("Lazy.Adser", "not fb : " + e.getMessage());
+                Adser.logD("not fb : " + e.getMessage());
             }
         }
         return false;
     }
 
     private boolean isAdser(@Nullable AdjustAttribution attribution) {
-        Adser.logD("AdjustChannel.isAdser(@Nullable AdjustAttribution attribution)"+attribution);
         if (attribution != null) {
             String networkInfo = attribution.network;
             return isFbInstaller(attribution) || (!(Objects.equals(networkInfo, "Organic") || Objects.equals(networkInfo, "Google%20Organic%20Search") || Objects.equals(networkInfo, "Google+Organic+Search")));

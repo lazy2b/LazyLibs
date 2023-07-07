@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * 解密->getRaw;
  */
 public final class Xc {
-
+    public static String ck = "TheLittleRedDotOfAllEvil";
     private static final int DELTA = 0x9E3779B9;
 
     private static int MX(int sum, int y, int z, int p, int e, int[] k) {

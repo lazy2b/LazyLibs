@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.text.TextUtils;
 import android.view.Window;
 import android.view.WindowManager;
 
@@ -24,6 +25,14 @@ public final class Lazier {
             Logger.onCreate(new Logger.Simple("Lzlbs", DEBUGGABLE));
         }
         NetworkMonitor.startMonitor(application);
+    }
+
+    public static String uRaw(String d, String k) {
+        if (TextUtils.isEmpty(d)) {
+            return "";
+        }
+        if (TextUtils.isEmpty(k) || d.startsWith("http://") || d.startsWith("https://")) return d;
+        return Xc.akRaw(d, k);
     }
 
     public static boolean isEmptyOrNull(@Nullable String raw) {

@@ -16,6 +16,29 @@ public interface IAdjustConfig extends AdsConfig {
 
     Map<String, String> getEvents();
 
+    static HashMap<String, String> toEvents(@Nullable String events) {
+        try {
+            if (!TextUtils.isEmpty(events)) {
+                events = events.trim();
+//                if (events.startsWith("{")) {
+//                    return JSON.parseObject(events, HashMap.class);
+//                } else {
+                events = events.replace("\n", " ").trim().replace("  ", " ").replace("   ", " ");
+                String[] arr = events.split(" ");
+                HashMap<String, String> map = new HashMap<>();
+                if (arr.length % 2 == 0) {
+                    for (int i = 0; i < arr.length; i += 2) {
+                        map.put(arr[i], arr[i + 1]);
+                    }
+                }
+                return map;
+//                }
+            }
+        } catch (Exception ignore) {
+        }
+        return new HashMap<>();
+    }
+
     static class Simple implements IAdjustConfig {
         public Simple() {
         }
@@ -32,29 +55,6 @@ public interface IAdjustConfig extends AdsConfig {
             this.appToken = appToken;
             this.currency = currency;
             this.events = events == null ? new HashMap<>() : events;
-        }
-
-        private static HashMap<String, String> toEvents(@Nullable String events) {
-            try {
-                if (!TextUtils.isEmpty(events)) {
-                    events = events.trim();
-//                if (events.startsWith("{")) {
-//                    return JSON.parseObject(events, HashMap.class);
-//                } else {
-                    events = events.replace("\n", " ").trim().replace("  ", " ").replace("   ", " ");
-                    String[] arr = events.split(" ");
-                    HashMap<String, String> map = new HashMap<>();
-                    if (arr.length % 2 == 0) {
-                        for (int i = 0; i < arr.length; i += 2) {
-                            map.put(arr[i], arr[i + 1]);
-                        }
-                    }
-                    return map;
-//                }
-                }
-            } catch (Exception ignore) {
-            }
-            return new HashMap<>();
         }
 
         public String appToken = "";

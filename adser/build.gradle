@@ -20,6 +20,7 @@ android {
 dependencies {
     implementation 'com.android.installreferrer:installreferrer:2.2'
     implementation 'com.adjust.sdk:adjust-android:4.33.4'
+    implementation 'com.alibaba:fastjson:1.1.73.android'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.5.1'
     implementation 'androidx.lifecycle:lifecycle-livedata-core:2.5.1'
 }
