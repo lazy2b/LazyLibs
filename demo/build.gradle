@@ -48,4 +48,5 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'com.adjust.sdk:adjust-android:4.33.4'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 }

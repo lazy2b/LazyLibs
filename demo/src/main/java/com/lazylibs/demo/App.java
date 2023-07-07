@@ -7,13 +7,18 @@ import androidx.annotation.Nullable;
 
 import com.lazylibs.adsenter.Enter;
 import com.lazylibs.adsenter.Patos;
+import com.lazylibs.adser.adjust.AdjustChannel;
+import com.lazylibs.adser.adjust.IAdjustConfig;
+import com.lazylibs.adser.base.AdsChannel;
 import com.lazylibs.http.SimpleOkHttp;
 import com.lazylibs.weber.LazyWebActivity;
 
 public class App extends Adapts {
+
+    @Nullable
     @Override
-    protected String AdsToken() {
-        return "bn2v0eblh3wg";
+    protected AdsChannel adsChannel() {
+        return new AdjustChannel(new IAdjustConfig.Simple("bn2v0eblh3wg", "BRL", ""));
     }
 
     interface ISettings{
@@ -44,7 +49,7 @@ public class App extends Adapts {
 
             @Override
             public String getPatos() {
-                return "https://bing.com";//"必须同意，不同意不给玩哦";//"https://bing.com";
+                return "必须同意，不同意不给玩哦";//"必须同意，不同意不给玩哦";//"https://bing.com";
             }
         });
         SimpleOkHttp simpleOkHttp = new SimpleOkHttp() {

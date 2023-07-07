@@ -2,18 +2,21 @@ package com.lazylibs.demo;
 
 import android.app.Application;
 
+import androidx.annotation.Nullable;
+
 import com.lazylibs.adser.Adser;
+import com.lazylibs.adser.base.AdsChannel;
 
 public class Adapts extends Application {
 
-    protected String AdsToken(){
-        return "";
+    protected @Nullable AdsChannel adsChannel() {
+        return null;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        Adser.onCreate(this, AdsToken());
+        Adser.onCreate(this, adsChannel());
     }
 
     @Override

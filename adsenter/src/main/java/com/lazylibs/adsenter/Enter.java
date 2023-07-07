@@ -4,14 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import androidx.lifecycle.Observer;
 
-import com.adjust.sdk.AdjustAttribution;
 import com.lazylibs.adser.Adser;
+import com.lazylibs.adser.base.AdsResult;
 
 public class Enter extends Activity {
     @Override
@@ -40,12 +38,12 @@ public class Enter extends Activity {
         }
 
         default void skipPatos(Activity activity) {
-            Adser.CORE.get().observeForever(new Observer<AdjustAttribution>() {
+            Adser.CORE.get().observeForever(new Observer<AdsResult>() {
                 @Override
-                public void onChanged(AdjustAttribution attribution) {
-                    if (attribution != null) {
+                public void onChanged(AdsResult adsResult) {
+                    if (adsResult != null && adsResult.isLoaded) {
 //                        quitFullScreen(activity.getWindow());
-                        skipper().adsed(activity, Adser.CORE.isAdser());
+                        skipper().adsed(activity, adsResult.isAdser);
                         Adser.CORE.get().removeObserver(this);
                     }
                 }

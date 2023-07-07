@@ -3,3 +3,19 @@ plugins {
     id 'com.android.application' version '8.0.0' apply false
     id 'com.android.library' version '8.0.0' apply false
 }
+
+//subprojects {
+//    project.configurations.all {
+//        resolutionStrategy {
+//            force 'androidx.annotation:annotation:1.6.0'
+//            force 'androidx.arch.core:core-runtime:2.1.0'
+//            force 'androidx.core:core-ktx:1.9.0'
+//            force 'androidx.customview:customview:1.1.0'
+//            force 'androidx.drawerlayout:drawerlayout:1.1.1'
+//            force 'org.jetbrains.kotlin:kotlin-stdlib:1.8.0'
+//            force 'org.jetbrains.kotlin:kotlin-stdlib-common:1.8.0'
+//            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.0'
+//            force 'org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.0'
+//        }
+//    }
+//}
