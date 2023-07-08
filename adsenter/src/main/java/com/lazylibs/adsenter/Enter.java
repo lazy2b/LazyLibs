@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer;
 
 import com.lazylibs.adser.Adser;
 import com.lazylibs.adser.base.AdsResult;
+import com.lazylibs.utils.Logger;
 
 public class Enter extends Activity {
     @Override
@@ -27,6 +28,7 @@ public class Enter extends Activity {
 
     public interface ISkipper {
         default void afterEnter(Activity activity, boolean agreePatos) {
+            Logger.d("Enter.ISkipper.afterEnter " + agreePatos);
             if (agreePatos) {
                 skipPatos(activity);
             } else {
@@ -38,10 +40,13 @@ public class Enter extends Activity {
         }
 
         default void skipPatos(Activity activity) {
+            Logger.d("Enter.ISkipper.skipPatos");
             Adser.CORE.get().observeForever(new Observer<AdsResult>() {
                 @Override
                 public void onChanged(AdsResult adsResult) {
+                    Logger.d("Enter.ISkipper.skipPatos.onChanged 1 " + adsResult);
                     if (adsResult != null && adsResult.isLoaded) {
+                        Logger.d("Enter.ISkipper.skipPatos.onChanged 2 " + adsResult.isAdser);
 //                        quitFullScreen(activity.getWindow());
                         skipper().adsed(activity, adsResult.isAdser);
                         Adser.CORE.get().removeObserver(this);

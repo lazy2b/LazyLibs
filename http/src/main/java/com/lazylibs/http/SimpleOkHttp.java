@@ -1,5 +1,6 @@
 package com.lazylibs.http;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -15,8 +16,11 @@ import okhttp3.Response;
 import okhttp3.ResponseBody;
 
 public class SimpleOkHttp implements Callback {
-    public OkHttpClient get(String url) {
-        OkHttpClient client = new OkHttpClient.Builder().build();
+    private String retryUrl = "";
+
+    public OkHttpClient getRetry(String url) {
+        retryUrl = url;
+        OkHttpClient client = getHttpBuilder().build();
         try {
             client.newCall(new Request.Builder().url(url).get().build()).enqueue(this);
         } catch (Exception exception) {
@@ -25,9 +29,29 @@ public class SimpleOkHttp implements Callback {
         return client;
     }
 
+    public OkHttpClient get(String url) {
+        OkHttpClient client = getHttpBuilder().build();
+        try {
+            client.newCall(new Request.Builder().url(url).get().build()).enqueue(this);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+        return client;
+    }
+
+    public OkHttpClient.Builder getHttpBuilder() {
+        return new OkHttpClient.Builder();
+    }
+
     @Override
     public final void onFailure(@NonNull Call call, @NonNull IOException e) {
-        onFailure(e);
+        if (TextUtils.isEmpty(retryUrl)) {
+            onFailure(e);
+        } else {
+            e.printStackTrace();
+            Log.e("SimpleOkhttp", "retry:"+retryUrl);
+            get(retryUrl);
+        }
     }
 
     @Override

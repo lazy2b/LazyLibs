@@ -4,6 +4,7 @@ package com.lazylibs.utils;
 import java.nio.charset.StandardCharsets;
 
 /**
+ * @xxeta
  * 加解密工具类。【为防止反编译后很容易判断出加解密算法，请勿改名！！！！】
  * 加密->xCode;
  * 解密->getRaw;

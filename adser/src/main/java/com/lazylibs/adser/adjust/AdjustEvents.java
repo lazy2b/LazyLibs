@@ -2,17 +2,20 @@ package com.lazylibs.adser.adjust;
 
 import android.text.TextUtils;
 
+import androidx.annotation.Keep;
+
 import com.adjust.sdk.AdjustEvent;
 import com.lazylibs.adser.Adser;
-import com.lazylibs.adser.base.AdsEvent;
+import com.lazylibs.adser.base.IAdsEvent;
 
-public class AdjustEvents implements AdsEvent {
+@Keep
+public class AdjustEvents implements IAdsEvent {
     public String key;
     public String value;
     public String currency = "";
     public boolean isRecharge = false;
 
-    static class Converter implements AdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> {
+    static class Converter implements IAdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> {
         @Override
         public AdjustEvent convert(IAdjustConfig config, AdjustEvents input) {
             if (!TextUtils.isEmpty(input.key)) {

@@ -14,25 +14,27 @@ import com.adjust.sdk.AdjustConfig;
 import com.adjust.sdk.AdjustEvent;
 import com.adjust.sdk.LogLevel;
 import com.lazylibs.adser.Adser;
-import com.lazylibs.adser.base.AdsChannel;
-import com.lazylibs.adser.base.AdsEvent;
+import com.lazylibs.adser.base.IAdsChannel;
+import com.lazylibs.adser.base.IAdsEvent;
 import com.lazylibs.adser.base.AdsResult;
+import com.lazylibs.adser.base.IAdsResultUpdater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Objects;
 
-public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
+public class AdjustChannel implements IAdsChannel<IAdjustConfig, AdjustEvents> {
 
     private final IAdjustConfig configs;
-    private final AdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> converter;
+    private final IAdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> converter;
+    private IAdsResultUpdater adsResultUpdater;
 
     public AdjustChannel(IAdjustConfig configs) {
         this(configs, new AdjustEvents.Converter());
     }
 
-    public AdjustChannel(IAdjustConfig configs, AdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> converter) {
+    public AdjustChannel(IAdjustConfig configs, IAdsEvent.Converter<IAdjustConfig, AdjustEvents, AdjustEvent> converter) {
         this.configs = configs;
         this.converter = converter == null ? new AdjustEvents.Converter() : converter;
     }
@@ -47,7 +49,8 @@ public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
     }
 
     @Override
-    public void onCreate(Application app) {
+    public void onCreate(Application app, IAdsResultUpdater adsResultUpdater) {
+        this.adsResultUpdater = adsResultUpdater;
         assert app != null;
         assert configs != null;
         boolean debug = (app.getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
@@ -66,13 +69,13 @@ public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
         });
         config.setOnDeeplinkResponseListener(uri -> true);
         config.setOnAttributionChangedListener(attribution -> {
-            if (attribution != null) {
-                Adser.CORE.update(new AdsResult(true, isAdser(attribution)));
+            Adser.logD("AdjustChannel.onAttributionChanged " + attribution);
+            if (this.adsResultUpdater != null && attribution != null) {
+                this.adsResultUpdater.update(new AdsResult(true, isAdser(attribution)));
             }
         });
         config.setLogLevel(debug ? LogLevel.VERBOSE : LogLevel.ERROR);
         Adjust.onCreate(config);
-        Adjust.getAttribution();
         register(app);
     }
 
@@ -84,6 +87,7 @@ public class AdjustChannel implements AdsChannel<IAdjustConfig, AdjustEvents> {
     @Override
     public AdsResult adsResult() {
         AdjustAttribution attribution = Adjust.getAttribution();
+        Adser.logD("AdjustChannel.adsResult " + attribution);
         if (attribution != null) {
             return new AdsResult(true, isAdser(attribution));
         }

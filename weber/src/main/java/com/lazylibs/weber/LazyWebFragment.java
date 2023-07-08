@@ -64,7 +64,7 @@ public class LazyWebFragment extends Fragment {
                 if (!firstLoadOver) {
                     firstLoadOver = true;
                     // handle first loaded...
-                    requireView().findViewById(com.lazylibs.widget.R.id.loading_container).setVisibility(View.GONE);
+                    requireView().findViewById(R.id.loading_container).setVisibility(View.GONE);
                 }
                 if (extraWebHandler != null) {
                     extraWebHandler.doProgressed(url);
@@ -114,7 +114,7 @@ public class LazyWebFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.tpl_webviewer, container, false);
+        return inflater.inflate(R.layout.weber_tpl, container, false);
     }
 
     @Override

@@ -7,18 +7,20 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.lazylibs.adser.base.AdsChannel;
-import com.lazylibs.adser.base.AdsConfig;
-import com.lazylibs.adser.base.AdsEvent;
+import com.lazylibs.adser.base.IAdsChannel;
+import com.lazylibs.adser.base.IAdsConfig;
+import com.lazylibs.adser.base.IAdsEvent;
 import com.lazylibs.adser.base.AdsResult;
+import com.lazylibs.adser.base.IAdsResultUpdater;
 
-public enum Adser {
+public enum Adser implements IAdsResultUpdater {
     CORE;
 
     public LiveData<AdsResult> get() {
         return _liveData;
     }
 
+    @Override
     public void update(@Nullable AdsResult result) {
         _liveData.postValue(result);
     }
@@ -26,6 +28,7 @@ public enum Adser {
     private final MutableLiveData<AdsResult> _liveData = new LazyLiveData<>(this::fetchAdser);
 
     private LiveData<AdsResult> fetchAdser() {
+        logD("Adser.fetchAdser " + channel);
         if (channel != null) {
             return new MutableLiveData<>(channel.adsResult());
         }
@@ -37,30 +40,36 @@ public enum Adser {
         return adsResult != null && adsResult.isLoaded && adsResult.isAdser;
     }
 
-    private AdsChannel channel;
+    private IAdsChannel channel;
 
-    public static <C extends AdsConfig, E extends AdsEvent> void onCreate(Application app, AdsChannel<C, E> adsChannel) {
-        if (adsChannel != null) {
-            CORE.channel = adsChannel;
-            CORE.channel.onCreate(app);
+    public static boolean isInitialized() {
+        return CORE.channel != null;
+    }
+
+    public static <C extends IAdsConfig, E extends IAdsEvent> void onCreate(Application app, IAdsChannel<C, E> IAdsChannel) {
+        logD("Adser.onCreate " + IAdsChannel);
+        if (!isInitialized() && IAdsChannel != null) {
+            CORE.channel = IAdsChannel;
+            CORE.channel.onCreate(app, CORE);
         }
     }
 
     public static void onTerminate(Application app) {
+        logD("Adser.onTerminate ");
         if (CORE.channel != null) {
             CORE.channel.onTerminate(app);
             CORE.channel = null;
         }
     }
 
-    public static <E extends AdsEvent> void trackEvent(E events) {
+    public static <E extends IAdsEvent> void trackEvent(E events) {
         if (CORE.channel != null) {
             CORE.channel.trackEvents(events);
         }
     }
 
     public static void logD(String msg) {
-        Log.d("Lazy.Adser", msg);
+        Log.d("Lzlbs", msg);
     }
 
 }

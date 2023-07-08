@@ -11,6 +11,7 @@ import android.widget.ViewFlipper;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.lazylibs.utils.FragmentUtils;
+import com.lazylibs.utils.Logger;
 import com.lazylibs.weber.IWebHandler;
 import com.lazylibs.weber.LazyWebFragment;
 
@@ -26,7 +27,7 @@ public class Patos extends AppCompatActivity {
         setContentView(viewFlipper);
 //        viewFlipper.setInAnimation(AnimationUtils.loadAnimation(viewFlipper.getContext(), R.anim.push_left_in));
 //        viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(viewFlipper.getContext(), R.anim.push_right_out));
-        vLoading = LayoutInflater.from(this).inflate(com.lazylibs.widget.R.layout.tpl_loading, viewFlipper, false);
+        vLoading = LayoutInflater.from(this).inflate(R.layout.tpl_loading, viewFlipper, false);
         if (Enter.isAgreePatos(this)) {
             v2Main();
         } else {
@@ -37,7 +38,7 @@ public class Patos extends AppCompatActivity {
     private View vPatos, vLoading;
 
     private void v2Patos() {
-
+        Logger.d("Patos.v2Patos ");
         viewFlipper.addView(vLoading);
         viewFlipper.showNext();
 
@@ -51,6 +52,7 @@ public class Patos extends AppCompatActivity {
 
         String patos = Enter.skipper().getPatos();
         if (patos.startsWith("http://") || patos.startsWith("https://")) {
+            Logger.d("Patos.v2Patos 1");
             vPatos.findViewById(R.id.wb_patos).setVisibility(View.VISIBLE);
             FragmentUtils.replaceFragmentToActivity(R.id.wb_patos, getSupportFragmentManager(), LazyWebFragment.newInstance(patos, null).setExtraWebHandler(new IWebHandler() {
                 @Override
@@ -59,6 +61,7 @@ public class Patos extends AppCompatActivity {
                 }
             }));
         } else {
+            Logger.d("Patos.v2Patos 2");
             tvPatos.setText(Html.fromHtml(patos, Html.FROM_HTML_MODE_COMPACT));
             tvPatos.setVisibility(View.VISIBLE);
             tvAgree.setVisibility(View.VISIBLE);
@@ -69,6 +72,7 @@ public class Patos extends AppCompatActivity {
     }
 
     private void v2Main() {
+        Logger.d("Patos.v2Main ");
         viewFlipper.addView(vLoading);
         viewFlipper.showNext();
         if (vPatos != null) viewFlipper.removeView(vPatos);

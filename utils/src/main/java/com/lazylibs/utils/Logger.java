@@ -4,7 +4,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public final class Logger {
-    static class Simple implements ILogger {
+    public static class Simple implements ILogger {
         private final String tag;
         private final boolean debuggable;
 

@@ -4,12 +4,12 @@ import android.text.TextUtils;
 
 import androidx.annotation.Nullable;
 
-import com.lazylibs.adser.base.AdsConfig;
+import com.lazylibs.adser.base.IAdsConfig;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public interface IAdjustConfig extends AdsConfig {
+public interface IAdjustConfig extends IAdsConfig {
     String getAppToken();
 
     String getCurrency();
@@ -39,7 +39,7 @@ public interface IAdjustConfig extends AdsConfig {
         return new HashMap<>();
     }
 
-    static class Simple implements IAdjustConfig {
+    class Simple implements IAdjustConfig {
         public Simple() {
         }
 

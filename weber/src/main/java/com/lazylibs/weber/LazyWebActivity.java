@@ -6,29 +6,27 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.lazylibs.utils.FragmentUtils;
+import androidx.fragment.app.FragmentActivity;
 
 import java.io.Serializable;
 import java.util.HashMap;
 
-public class LazyWebActivity extends AppCompatActivity {
+public class LazyWebActivity extends FragmentActivity {
     LazyWebFragment web;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lazy_borswer);
+        setContentView(R.layout.weber_lazy_borswer);
         initWebView(getIntent().getStringExtra(WEB_URL), getIntent().getSerializableExtra(WEB_BRIDGE));
     }
 
     protected void initWebView(String stringExtra, Serializable jsBridge) {
-        HashMap<String,Object> objectHashMap = getJsBridge();
-        if(jsBridge instanceof HashMap){
+        HashMap<String, Object> objectHashMap = getJsBridge();
+        if (jsBridge instanceof HashMap) {
             objectHashMap = (HashMap<String, Object>) jsBridge;
         }
-        FragmentUtils.replaceFragmentToActivity(R.id.fl_web, getSupportFragmentManager(), web = LazyWebFragment.newInstance(stringExtra, objectHashMap));
+        getSupportFragmentManager().beginTransaction().replace(R.id.fl_web, web = LazyWebFragment.newInstance(stringExtra, objectHashMap)).commit();
     }
 
     protected HashMap<String, Object> getJsBridge() {
