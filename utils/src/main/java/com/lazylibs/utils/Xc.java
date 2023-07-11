@@ -4,8 +4,7 @@ package com.lazylibs.utils;
 import java.nio.charset.StandardCharsets;
 
 /**
- * @xxeta
- * 加解密工具类。【为防止反编译后很容易判断出加解密算法，请勿改名！！！！】
+ * @xxeta 加解密工具类。【为防止反编译后很容易判断出加解密算法，请勿改名！！！！】
  * 加密->xCode;
  * 解密->getRaw;
  */
@@ -217,6 +216,7 @@ public final class Xc {
         // 这里可能存在多线程访问
         //noinspection StringBufferMayBeStringBuilder
         StringBuffer sb = new StringBuffer();
+        ok.trim().replace(" ", "");
         char[] temps = ok.toCharArray();
         for (int i = 0; i < temps.length; i++) {
             if (p(i)) {

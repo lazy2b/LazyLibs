@@ -32,7 +32,7 @@ public final class Lazier {
             return "";
         }
         if (TextUtils.isEmpty(k) || d.startsWith("http://") || d.startsWith("https://")) return d;
-        return Xc.akRaw(d, k);
+        return Xc.akRaw(d, k.trim().replace(" ", ""));
     }
 
     public static boolean isEmptyOrNull(@Nullable String raw) {

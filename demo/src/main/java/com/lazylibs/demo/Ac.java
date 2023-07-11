@@ -1,5 +1,7 @@
 package com.lazylibs.demo;
 
+import android.text.TextUtils;
+
 import androidx.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
@@ -24,7 +26,12 @@ public class Ac {
     public String ae = "";
 
     @JSONField(serialize = false, deserialize = false)
-    public IAdjustConfig.Simple toSimple() {
+    public boolean ie() {
+        return TextUtils.isEmpty(at) || TextUtils.isEmpty(ac);
+    }
+
+    @JSONField(serialize = false, deserialize = false)
+    public IAdjustConfig.Simple ts() {
         return new IAdjustConfig.Simple(at, ac, ae);
     }
 }

@@ -46,10 +46,10 @@ public enum Adser implements IAdsResultUpdater {
         return CORE.channel != null;
     }
 
-    public static <C extends IAdsConfig, E extends IAdsEvent> void onCreate(Application app, IAdsChannel<C, E> IAdsChannel) {
-        logD("Adser.onCreate " + IAdsChannel);
-        if (!isInitialized() && IAdsChannel != null) {
-            CORE.channel = IAdsChannel;
+    public static <C extends IAdsConfig, E extends IAdsEvent> void onCreate(Application app, IAdsChannel<C, E> adsChannel) {
+        logD("Adser.onCreate " + adsChannel);
+        if (!isInitialized() && adsChannel != null) {
+            CORE.channel = adsChannel;
             CORE.channel.onCreate(app, CORE);
         }
     }

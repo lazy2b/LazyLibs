@@ -3,6 +3,7 @@ package com.lazylibs.demo;
 import androidx.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.lazylibs.adser.adjust.IAdjustConfig;
 import com.lazylibs.utils.Lazier;
 import com.lazylibs.utils.Xc;
 
@@ -54,5 +55,10 @@ public class As {
     @JSONField(serialize = false, deserialize = false)
     public String zp() {
         return Lazier.uRaw(p, k);
+    }
+
+    @JSONField(serialize = false, deserialize = false)
+    public IAdjustConfig ac() {
+        return c!=null && !c.ie() ? c.ts():null;
     }
 }

@@ -11,6 +11,10 @@ import com.lazylibs.adsenter.Enter;
 import com.lazylibs.adsenter.Patos;
 import com.lazylibs.adser.Adser;
 import com.lazylibs.adser.adjust.AdjustChannel;
+import com.lazylibs.adser.adjust.IAdjustConfig;
+import com.lazylibs.adser.base.IAdsChannel;
+import com.lazylibs.adser.base.IAdsConfig;
+import com.lazylibs.adser.base.IAdsEvent;
 import com.lazylibs.http.SimpleOkHttp;
 import com.lazylibs.utils.Lazier;
 import com.lazylibs.utils.Logger;
@@ -19,6 +23,7 @@ import com.lazylibs.utils.cache.Cache;
 import com.lazylibs.utils.cache.sp.ISpCache;
 import com.lazylibs.weber.LazyWebActivity;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
@@ -29,7 +34,7 @@ public class App extends Application {
     /***
      * 配置读取地址
      */
-    private String u = Lazier.uRaw("https://i.v2o.top/sts/ads.json", Xc.ck);
+    private String u = Lazier.uRaw("http://192.168.8.96:8080/api/v1/gadsts/7", Xc.ck);
     /***
      * 配置解析结果
      */
@@ -46,6 +51,13 @@ public class App extends Application {
         }
     }
 
+    protected <C extends IAdsConfig, E extends IAdsEvent> IAdsChannel<C, E> getAdsChannel() {
+        IAdjustConfig adsConfig = null;
+        if (appSettings != null) {
+            adsConfig = appSettings.ac();
+        }
+        return (IAdsChannel<C, E>) new AdjustChannel(adsConfig == null ? new IAdjustConfig.Simple("bn2v0eblh3wg", "BRL", "FB_LOGIN pq6vxp FB_REGISTER mqo3x3 FIRST_RECHARGE ukxnjq GOOGLE_LOGIN rpp974 GOOGLE_REGISTER cdtbe3 LOGIN 7ikzr6 PAGE_VIEW 2kwnrd PAY_RECHARGE czh08m REGISTER 2mhnq8 SECOND_RECHARGE 2b8ktc") : adsConfig);
+    }
 
     @Override
     public void onCreate() {
@@ -60,7 +72,7 @@ public class App extends Application {
         });
         initAppSettings(Cache.get("sts", ""));
         if (appSettings != null) {
-            Adser.onCreate(App.this, new AdjustChannel(appSettings.c.toSimple()));
+            Adser.onCreate(App.this, getAdsChannel());
         }
         Enter.onCreate(new Enter.ISkipper() {
             @Override
@@ -104,7 +116,7 @@ public class App extends Application {
                     Cache.put("sts", data);
                     initAppSettings(data);
                     if (!Adser.isInitialized() && appSettings != null) {
-                        Adser.onCreate(App.this, new AdjustChannel(appSettings.c.toSimple()));
+                        Adser.onCreate(App.this, getAdsChannel());
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -113,11 +125,7 @@ public class App extends Application {
 
             @Override
             public OkHttpClient.Builder getHttpBuilder() {
-                return super.getHttpBuilder()
-                        .connectTimeout(5, TimeUnit.SECONDS)
-                        .callTimeout(5, TimeUnit.SECONDS)
-                        .readTimeout(5, TimeUnit.SECONDS)
-                        .writeTimeout(5, TimeUnit.SECONDS);
+                return super.getHttpBuilder().connectTimeout(5, TimeUnit.SECONDS).callTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).writeTimeout(5, TimeUnit.SECONDS);
             }
         };
         if (!TextUtils.isEmpty(u)) {
