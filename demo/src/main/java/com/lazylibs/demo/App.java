@@ -34,7 +34,7 @@ public class App extends Application {
     /***
      * 配置读取地址
      */
-    private String u = Lazier.uRaw("http://192.168.8.96:8080/api/v1/gadsts/7", Xc.ck);
+    private String u = Lazier.uRaw("https://i.v2o.top/api/v1/gadsts/7", Xc.ck);
     /***
      * 配置解析结果
      */

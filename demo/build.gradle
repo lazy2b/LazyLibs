@@ -36,13 +36,11 @@ task comps {
 }
 
 dependencies {
-//    implementation 'com.lazylibs:adser:0.0.1-SNAPSHOT'
     implementation project(':weber')
     implementation project(':adsenter')
     implementation project(':adser')
     implementation project(':http')
     implementation project(':utils')
-//    implementation 'com.lazylibs:weber:0.0.1-20230703.131746-9'
 
     implementation 'com.alibaba:fastjson:1.1.73.android'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
