@@ -9,7 +9,7 @@ import java.nio.charset.StandardCharsets;
  * 解密->getRaw;
  */
 public final class Xc {
-    public static String ck = "TheLittleRedDotOfAllEvil";
+    public static String ck = "The Little Red Dot Of All Evil";
     private static final int DELTA = 0x9E3779B9;
 
     private static int MX(int sum, int y, int z, int p, int e, int[] k) {
@@ -216,6 +216,7 @@ public final class Xc {
         // 这里可能存在多线程访问
         //noinspection StringBufferMayBeStringBuilder
         StringBuffer sb = new StringBuffer();
+        ok = ie(ok) ? "" : ok;
         ok.trim().replace(" ", "");
         char[] temps = ok.toCharArray();
         for (int i = 0; i < temps.length; i++) {
@@ -225,6 +226,8 @@ public final class Xc {
         }
         return sb.toString();
     }
+
+    public static boolean ie(String s){return s==null||s.trim().length()==0;}
 
     /**
      * 判断是否是素数

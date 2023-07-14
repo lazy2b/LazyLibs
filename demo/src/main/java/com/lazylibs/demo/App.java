@@ -4,8 +4,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
+import android.util.Log;
 
+import com.adjust.sdk.Adjust;
 import com.alibaba.fastjson.JSON;
 import com.lazylibs.adsenter.Enter;
 import com.lazylibs.adsenter.Patos;
@@ -62,6 +67,42 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        registerActivityLifecycleCallbacks(new Application.ActivityLifecycleCallbacks() {
+            @Override
+            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public void onActivityStarted(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivityResumed(Activity activity) {
+                Log.d("Lzlbs", "onActivityResumed " + activity.getComponentName());
+            }
+
+            @Override
+            public void onActivityPaused(Activity activity) {
+                Log.d("Lzlbs", "onActivityPaused " + activity.getComponentName());
+            }
+
+            @Override
+            public void onActivityStopped(Activity activity) {
+
+            }
+
+            @Override
+            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
+
+            }
+
+            @Override
+            public void onActivityDestroyed(Activity activity) {
+
+            }
+        });
         Lazier.onCreate(this);
         Logger.d("App.onCreate()");
         Cache.onCreate(new ISpCache.Factory() {
@@ -74,7 +115,23 @@ public class App extends Application {
         if (appSettings != null) {
             Adser.onCreate(App.this, getAdsChannel());
         }
+//        else {
+//            Handler handler = new Handler(Looper.getMainLooper());
+//            handler.postDelayed(() -> Adser.onCreate(App.this, getAdsChannel()), 2000);
+//        }
         Enter.onCreate(new Enter.ISkipper() {
+
+
+            @Override
+            public void afterEnter(Activity activity, boolean agreePatos) {
+                Logger.d("Enter.ISkipper.afterEnter " + agreePatos);
+                if (agreePatos) {
+                    skipPatos(activity);
+                } else {
+                    showPatos(activity);
+                }
+            }
+
             @Override
             public void adsed(Activity activity, boolean isAdser) {
                 Logger.d("App.onCreate.adsed " + isAdser);
@@ -116,19 +173,21 @@ public class App extends Application {
                     Cache.put("sts", data);
                     initAppSettings(data);
                     if (!Adser.isInitialized() && appSettings != null) {
-                        Adser.onCreate(App.this, getAdsChannel());
+                        Handler handler = new Handler(Looper.getMainLooper());
+                        handler.post(() -> Adser.onCreate(App.this, getAdsChannel()));
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
-            @Override
-            public OkHttpClient.Builder getHttpBuilder() {
-                return super.getHttpBuilder().connectTimeout(5, TimeUnit.SECONDS).callTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).writeTimeout(5, TimeUnit.SECONDS);
-            }
+//            @Override
+//            public OkHttpClient.Builder getHttpBuilder() {
+//                return super.getHttpBuilder().connectTimeout(5, TimeUnit.SECONDS).callTimeout(5, TimeUnit.SECONDS).readTimeout(5, TimeUnit.SECONDS).writeTimeout(5, TimeUnit.SECONDS);
+//            }
         };
         if (!TextUtils.isEmpty(u)) {
+            Logger.d("App.onCreate.getRetry : " + u);
             simpleOkHttp.getRetry(u);
         }
     }

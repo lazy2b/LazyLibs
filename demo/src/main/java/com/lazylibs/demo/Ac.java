@@ -25,6 +25,15 @@ public class Ac {
     @JSONField(name = "ae")
     public String ae = "";
 
+    public Ac() {
+    }
+
+    public Ac(Ac c) {
+        this.at = c.at;
+        this.ac = c.ac;
+        this.ae = c.ae;
+    }
+
     @JSONField(serialize = false, deserialize = false)
     public boolean ie() {
         return TextUtils.isEmpty(at) || TextUtils.isEmpty(ac);
