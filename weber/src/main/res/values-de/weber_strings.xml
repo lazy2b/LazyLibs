@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">SSL-Zertifikatsfehler. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_untrusted">SSL-Zertifikat nicht vertrauenswürdig. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_date_invalid">SSL-Zertifikat ungültig aufgrund des Datums. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_expired">SSL-Zertifikat abgelaufen. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_idmismatch">Ungültiger Servername im SSL-Zertifikat. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_notypetvalid">Ungültiges SSL-Zertifikat. Möchten Sie den Webseitenladevorgang fortsetzen?</string>
+    <string name="ssl_tips">SSL-Sicherheitshinweis</string>
+    <string name="ssl_load">Laden</string>
+    <string name="ssl_abort">Abbrechen</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">Erreur de certificat SSL. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_untrusted">Certificat SSL non fiable. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_date_invalid">Certificat SSL invalide en raison de la date. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_expired">Certificat SSL expiré. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_idmismatch">Nom du serveur non valide dans le certificat SSL. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_notypetvalid">Certificat SSL non valide. Voulez-vous continuer à charger la page Web ?</string>
+    <string name="ssl_tips">Avis de sécurité SSL</string>
+    <string name="ssl_load">Charger</string>
+    <string name="ssl_abort">Abandonner</string>
+</resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">SSL certificate error. Do you want to continue loading the page?</string>
+    <string name="ssl_untrusted">SSL certificate not trusted. Do you want to continue loading the page?</string>
+    <string name="ssl_date_invalid">SSL certificate date invalid. Do you want to continue loading the page?</string>
+    <string name="ssl_expired">SSL certificate expired. Do you want to continue loading the page?</string>
+    <string name="ssl_idmismatch">SSL certificate hostname invalid. Do you want to continue loading the page?</string>
+    <string name="ssl_notypetvalid">SSL certificate not valid. Do you want to continue loading the page?</string>
+    <string name="ssl_tips">SSL Security Alert</string>
+    <string name="ssl_load">Load</string>
+    <string name="ssl_abort">Abort</string>
+</resources>

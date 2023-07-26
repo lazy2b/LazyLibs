@@ -1,6 +1,7 @@
 package com.lazylibs.weber;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -34,11 +35,34 @@ public class LazyWebViewClient extends WebViewClient {
     @SuppressLint("WebViewClientOnReceivedSslError")
     @Override
     public void onReceivedSslError(WebView view, SslErrorHandler handler, SslError error) {
-//        super.onReceivedSslError(view, handler, error);
-        // 忽略ssl错误
-        handler.proceed();
-//        WebViewHelper.logE("onReceivedSslError", view.getUrl() +" >>> " + fUrl);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext().getApplicationContext());
+        int message = R.string.ssl_error;
+        switch (error.getPrimaryError()) {
+            case SslError.SSL_UNTRUSTED:
+                message = R.string.ssl_untrusted;
+                break;
+            case SslError.SSL_DATE_INVALID:
+                message = R.string.ssl_date_invalid;
+                break;
+            case SslError.SSL_EXPIRED:
+                message = R.string.ssl_expired;
+                break;
+            case SslError.SSL_IDMISMATCH:
+                message = R.string.ssl_idmismatch;
+                break;
+            case SslError.SSL_NOTYETVALID:
+                message = R.string.ssl_notypetvalid;
+                break;
+        }
+        LazyWebHelper.logE("WebError", String.format("Failed to access %s. Error: %s", error.getUrl(), view.getResources().getString(message)));
+        builder.setTitle(R.string.ssl_tips);
+        builder.setMessage(message);
+        builder.setPositiveButton(R.string.ssl_load, (dialog, which) -> handler.proceed());
+        builder.setNegativeButton(R.string.ssl_abort, (dialog, which) -> handler.cancel());
+        final AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
 
     public void onReceivedError(WebView view, int errorCode, String description, String fUrl) {
         finishedHelper.toReceivedError();

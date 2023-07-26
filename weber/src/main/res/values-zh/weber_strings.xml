@@ -1,0 +1,11 @@
+<resources>
+    <string name="ssl_error">SSL证书错误. 您是否希望继续加载网页？</string>
+    <string name="ssl_untrusted">SSL证书不受信任. 您是否希望继续加载网页？</string>
+    <string name="ssl_date_invalid">SSL证书日期无效. 您是否希望继续加载网页？</string>
+    <string name="ssl_expired">SSL证书已过期. 您是否希望继续加载网页？</string>
+    <string name="ssl_idmismatch">SSL证书主机名无效. 您是否希望继续加载网页？</string>
+    <string name="ssl_notypetvalid">SSL证书未生效. 您是否希望继续加载网页？</string>
+    <string name="ssl_tips">SSL安全提示</string>
+    <string name="ssl_load">加载</string>
+    <string name="ssl_abort">终止</string>
+</resources>

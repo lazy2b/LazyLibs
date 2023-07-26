@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">SSL証明書エラー。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_untrusted">SSL証明書が信頼できません。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_date_invalid">SSL証明書が日付無効です。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_expired">SSL証明書が期限切れです。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_idmismatch">SSL証明書内のサーバー名が正しくありません。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_notypetvalid">無効なSSL証明書です。ウェブページの読み込みを続行しますか？</string>
+    <string name="ssl_tips">SSLセキュリティの警告</string>
+    <string name="ssl_load">読み込み</string>
+    <string name="ssl_abort">中止</string>
+</resources>

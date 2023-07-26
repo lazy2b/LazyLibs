@@ -1,0 +1,11 @@
+<resources>
+    <string name="ssl_error">Error de certificado SSL. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_untrusted">Certificado SSL no confiable. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_date_invalid">Fecha inválida en el certificado SSL. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_expired">Certificado SSL expirado. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_idmismatch">Nombre de host inválido en el certificado SSL. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_notypetvalid">Certificado SSL no válido. ¿Desea continuar cargando la página?</string>
+    <string name="ssl_tips">Aviso de seguridad SSL</string>
+    <string name="ssl_load">Cargar</string>
+    <string name="ssl_abort">Cancelar</string>
+</resources>

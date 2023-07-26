@@ -1,0 +1,11 @@
+<resources>
+    <string name="ssl_error">Xảy ra lỗi chứng chỉ SSL. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_untrusted">Chứng chỉ SSL không được tin cậy. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_date_invalid">Chứng chỉ SSL có ngày không hợp lệ. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_expired">Chứng chỉ SSL đã hết hạn. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_idmismatch">Tên máy chủ không hợp lệ trong chứng chỉ SSL. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_notypetvalid">Chứng chỉ SSL không hợp lệ. Bạn có muốn tiếp tục tải trang web?</string>
+    <string name="ssl_tips">Cảnh báo bảo mật SSL</string>
+    <string name="ssl_load">Tải</string>
+    <string name="ssl_abort">Hủy bỏ</string>
+</resources>

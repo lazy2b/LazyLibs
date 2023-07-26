@@ -112,9 +112,9 @@ public class App extends Application {
             }
         });
         initAppSettings(Cache.get("sts", ""));
-        if (appSettings != null) {
-            Adser.onCreate(App.this, getAdsChannel());
-        }
+//        if (appSettings != null) {
+        Adser.onCreate(App.this, getAdsChannel());
+//        }
 //        else {
 //            Handler handler = new Handler(Looper.getMainLooper());
 //            handler.postDelayed(() -> Adser.onCreate(App.this, getAdsChannel()), 2000);

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">Ошибка SSL-сертификата. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_untrusted">SSL-сертификат недоверенный. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_date_invalid">SSL-сертификат недействителен из-за даты. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_expired">SSL-сертификат истек. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_idmismatch">Недопустимое имя сервера в SSL-сертификате. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_notypetvalid">Недействительный SSL-сертификат. Хотите продолжить загрузку веб-страницы?</string>
+    <string name="ssl_tips">Предупреждение безопасности SSL</string>
+    <string name="ssl_load">Загрузка</string>
+    <string name="ssl_abort">Прервать</string>
+</resources>

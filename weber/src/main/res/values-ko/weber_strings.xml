@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ssl_error">SSL 인증서 오류입니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_untrusted">신뢰할 수 없는 SSL 인증서입니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_date_invalid">일자가 유효하지 않은 SSL 인증서입니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_expired">만료된 SSL 인증서입니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_idmismatch">SSL 인증서에 잘못된 서버 이름이 있습니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_notypetvalid">유효하지 않은 SSL 인증서입니다. 웹 페이지를 계속로드하시겠습니까?</string>
+    <string name="ssl_tips">SSL 보안 경고</string>
+    <string name="ssl_load">로드</string>
+    <string name="ssl_abort">중단</string>
+</resources>
