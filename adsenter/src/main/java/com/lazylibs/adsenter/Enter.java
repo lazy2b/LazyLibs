@@ -27,6 +27,11 @@ public class Enter extends Activity {
     }
 
     public interface ISkipper {
+        /***
+         * 入口|闪屏页 倒计时结束后触发方法
+         * @param activity
+         * @param agreePatos 是否已经同意了隐私协议和服务条款
+         */
         default void afterEnter(Activity activity, boolean agreePatos) {
             Logger.d("Enter.ISkipper.afterEnter " + agreePatos);
             if (agreePatos) {
@@ -36,9 +41,17 @@ public class Enter extends Activity {
             }
         }
 
+        /**
+         * 跳转或显示 隐私协议和服务条款
+         * @param activity
+         */
         default void showPatos(Activity activity) {
         }
 
+        /**
+         * 跳过 隐私协议和服务条款 (点击同意服务条款或者同意后下次进入自动跳过)，一般在这里先统一处理广告归因结果
+         * @param activity
+         */
         default void skipPatos(Activity activity) {
             Logger.d("Enter.ISkipper.skipPatos");
             Adser.CORE.get().observeForever(new Observer<AdsResult>() {
@@ -55,9 +68,18 @@ public class Enter extends Activity {
             });
         }
 
+        /***
+         * 广告归因结果后跳转
+         * @param activity
+         * @param isAdser 是否广告用户
+         */
         default void adsed(Activity activity, boolean isAdser) {
         }
 
+        /**
+         * 获取服务条款和隐私协议连接
+         * @return
+         */
         default String getPatos() {
             return "";
         }
