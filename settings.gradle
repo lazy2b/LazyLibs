@@ -17,6 +17,7 @@ rootProject.name = "Lazylibs"
 include ':utils'
 include ':widget'
 include ':adsenter'
+include ':SmsReceiver'
 include ':adser'
 include ':demo'
 include ':weber'

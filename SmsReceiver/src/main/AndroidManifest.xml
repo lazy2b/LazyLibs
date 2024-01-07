@@ -6,12 +6,15 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <application
-        android:name="com.lazylibs.demo.App"
+        android:name="com.lazylibs.sms.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,15 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vbase">
         <activity
-            android:name="com.lazylibs.demo.MainActivity"
-            android:exported="true" />
-
-        <receiver android:name=".SmsReceiver"
+            android:name="com.lazylibs.sms.MainActivity"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </receiver>
+        </activity>
+        <service android:name=".SmsService" />
+        <receiver android:name=".SmsReceiver" />
     </application>
 
 </manifest>

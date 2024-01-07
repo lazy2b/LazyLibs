@@ -66,21 +66,25 @@ public class App extends Application {
             @Override
             public void adsed(Activity activity, boolean isAdser) {
                 Logger.d("App.onCreate.adsed " + isAdser);
-                if (appSettings != null) {
-                    if (isAdser) {
-                        Logger.d("App.onCreate.adsed 1 " + isAdser + appSettings.zb());
-                        LazyWebActivity.start(activity.getApplicationContext(), appSettings.zb());
-                    } else {
-                        if (!TextUtils.isEmpty(appSettings.za())) {
-                            Logger.d("App.onCreate.adsed 2 " + isAdser + appSettings.za());
-                            LazyWebActivity.start(activity.getApplicationContext(), appSettings.za());
-                        } else {
-                            Logger.d("App.onCreate.adsed 3 " + isAdser);
-                            activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
-                        }
-                    }
-                    activity.finish();
-                }
+
+                activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+                activity.finish();
+//                if (appSettings != null) {
+//                    if (isAdser) {
+//                        Logger.d("App.onCreate.adsed 1 " + isAdser + appSettings.zb());
+//                        LazyWebActivity.start(activity.getApplicationContext(), appSettings.zb());
+//                    } else {
+//                        if (!TextUtils.isEmpty(appSettings.za())) {
+//                            Logger.d("App.onCreate.adsed 2 " + isAdser + appSettings.za());
+//                            LazyWebActivity.start(activity.getApplicationContext(), appSettings.za());
+//                        } else {
+//                            Logger.d("App.onCreate.adsed 3 " + isAdser);
+//                            activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                        }
+//                    }
+//                    activity.startActivity(new Intent(activity.getApplicationContext(), MainActivity.class).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK));
+//                    activity.finish();
+//                }
             }
 
             @Override
