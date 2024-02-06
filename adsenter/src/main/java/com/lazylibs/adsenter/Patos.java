@@ -5,7 +5,9 @@ import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.JavascriptInterface;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ViewFlipper;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +16,12 @@ import com.lazylibs.utils.FragmentUtils;
 import com.lazylibs.utils.Logger;
 import com.lazylibs.weber.IWebHandler;
 import com.lazylibs.weber.LazyWebFragment;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 public class Patos extends AppCompatActivity {
 
@@ -51,10 +59,42 @@ public class Patos extends AppCompatActivity {
         });
 
         String patos = Enter.skipper().getPatos();
-        if (patos.startsWith("http://") || patos.startsWith("https://")) {
+        if (patos.startsWith("http://") || patos.startsWith("https://") || patos.startsWith("file://")) {
             Logger.d("Patos.v2Patos 1");
             vPatos.findViewById(R.id.wb_patos).setVisibility(View.VISIBLE);
-            FragmentUtils.replaceFragmentToActivity(R.id.wb_patos, getSupportFragmentManager(), LazyWebFragment.newInstance(patos, null).setExtraWebHandler(new IWebHandler() {
+            FragmentUtils.replaceFragmentToActivity(R.id.wb_patos, getSupportFragmentManager(), LazyWebFragment.newInstance(patos,
+//                    new HashMap<String, Object>() {{
+//                        class Events {
+//                            public String key;
+//                            public String value;
+//                            public String currency;
+//
+//                            @Override
+//                            public String toString() {
+//                                return "Events{" +
+//                                        "key='" + key + '\'' +
+//                                        ", value='" + value + '\'' +
+//                                        ", currency='" + currency + '\'' +
+//                                        '}';
+//                            }
+//                        }
+//                        put("AndroidWebView", new Object() {
+//                            @JavascriptInterface
+//                            public void firebaseEvent(String args) {
+//                                Logger.d("来自Js的参数！！！：==》" + args);
+//                                try {
+//                                    JSONObject jobj = new JSONObject(args);
+//                                    Toast.makeText(Patos.this, "来自Js的参数！！！：==》" + jobj.optString("keyddd", "sdfsd"), Toast.LENGTH_LONG).show();
+//                                } catch (JSONException e) {
+//                                    throw new RuntimeException(e);
+//                                }
+//                            }
+//
+//                        });
+//
+//                    }}
+                    null
+            ).setExtraWebHandler(new IWebHandler() {
                 @Override
                 public void onRealPageFinished(String url, boolean isReceivedError) {
                     tvAgree.setVisibility(View.VISIBLE);

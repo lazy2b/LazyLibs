@@ -161,7 +161,7 @@ public class App extends Application {
 
             @Override
             public String getPatos() {
-                return appSettings != null ? appSettings.zp() : "PATOS!";//"必须同意，不同意不给玩哦";//"必须同意，不同意不给玩哦";//"https://bing.com";
+                return "file:///android_asset/local.html";//appSettings != null ? appSettings.zp() : "PATOS!";//"必须同意，不同意不给玩哦";//"必须同意，不同意不给玩哦";//"https://bing.com";
             }
         });
         SimpleOkHttp simpleOkHttp = new SimpleOkHttp() {

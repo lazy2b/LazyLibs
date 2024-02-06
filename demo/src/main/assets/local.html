@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>适配手机WebView的H5页面</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        button {
+            font-size: 16px;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+<h1>Hello, World!</h1>
+<p>This is a simple H5 page.</p>
+<button onclick="showMessage()">Click me</button>
+<h1> Compass Application Privacy Protocol </h1>
+
+<p> This Privacy Agreement describes how we (" We "or the" Developer ") collect, use and protect
+    personal information when using the Compass App (" App "). Please read this Privacy Agreement
+    carefully. </p>
+
+<h2>1. Collected information </h2>
+We may collect and use the following types of information: </p>
+<ul>
+    <li> Device information: We may collect information about your device, such as device model,
+        operating system version, and unique device identifier.
+    </li>
+</ul>
+
+<h2>2. Use of information </h2>
+<p> We use the information we collect for the following purposes: </p>
+<ul>
+    Improving the user experience: We may use the information we collect to improve the
+    functionality and performance of the application to provide a better user experience. </li>
+</ul>
+
+<h2>3. Protection of information </h2>
+We take appropriate security measures to protect your personal information from unauthorized access,
+use or disclosure. We strive to take commercially reasonable precautions to protect the security of
+the personal information you provide to us. </p>
+
+<h2>4. Sharing of information </h2>
+We do not share your personal information with third parties unless we have your express consent or
+are required to do so by law. </p>
+
+<h2>5. Children's privacy </h2>
+<p> We do not knowingly collect personal information from any child under the age of 16. If we
+    discover that we have collected personal information from a child without the consent of a
+    parent or guardian, we will delete that information as soon as possible. </p>
+
+<h2>6. Privacy Update </h2>
+<p> We may update this Privacy Agreement from time to time. We encourage you to check this page
+    regularly for the latest privacy policy. </p>
+
+<h2>7. Contact us </h2>
+<p> If you have any questions or concerns about this Privacy Policy, or need to access, correct,
+    delete or update your personal information, please contact us at: </p>
+<p> Email: br1751796@gmail.com</p>
+<script>
+        function showMessage() {
+            if(window.AndroidWebView && window.AndroidWebView.firebaseEvent){
+<!--                console.log('v2.0-多币种:' + eventJson)-->
+                // PV事件：PAGE_VIEW
+<!--                let appEvent = {key:'PAGE_VIEW', value:''} // 或 {key:'PAGE_VIEW', value:'', currency:''}-->
+<!--                // 登录注册事件：LOGIN、REGISTER-->
+<!--                let appEvent = {key:'REGISTER', value:'100.00'} // 或 {key:'REGISTER', value:'100.00', currency:''}-->
+                // 付费事件：FIRST_RECHARGE、SECOND_RECHARGE、PAY_RECHARGE
+                let appEvent = {key:'FIRST_RECHARGE', value:'100', currency:'PHP'}
+                let eventJson = JSON.stringify(appEvent)
+                try{
+                    window.AndroidWebView.firebaseEvent(eventJson)
+                    console.log('v2.0-多币种:' + eventJson)
+                } catch(error){
+                    console.log('v2.0-多币种上报出错：' + error.message)
+                    window.AndroidWebView.firebaseEvent(appEvent.key, appEvent.value);
+                    console.log('v1.0-单币种:' + eventJson)
+                }
+            }
+        }
+</script>
+</body>
+</html>
