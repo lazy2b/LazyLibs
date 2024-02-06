@@ -2,6 +2,8 @@ package com.lazylibs.sms;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.role.RoleManager;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,6 +11,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -79,13 +85,32 @@ public class MainActivity extends AppCompatActivity {
 //        binding.forwardList.setHasFixedSize(true);
     }
 
+    private static final int REQUEST_ID = 1;
+
+    public void requestRole() {
+        RoleManager roleManager = (RoleManager) getSystemService(ROLE_SERVICE);
+        Intent intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING);
+        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+            @Override
+            public void onActivityResult(ActivityResult result) {
+                //            if (resultCode == android.app.Activity.RESULT_OK) {
+//                // Your app is now the call screening app
+//            } else {
+//                // Your app is not the call screening app
+//            }
+            }
+        });
+        launcher.launch(intent);
+    }
+
     /**
      * Checks whether the app has SMS permission.
      */
     @SuppressLint("NotifyDataSetChanged")
-    private void checkForSmsPermission() {
+    private void checkForSmsPermission() {requestRole();
         binding.title.setText("权限检测中...");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) == PackageManager.PERMISSION_GRANTED) {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ) {
             smsHelper = SmsHelper.create(this, smsContent -> {
                 smsList.add(smsContent);
                 Cache.put("smsList", JSON.toJSONString(smsList));
@@ -98,17 +123,17 @@ public class MainActivity extends AppCompatActivity {
             binding.title.setText("监听中...");
             binding.title.setOnClickListener(null);
         } else {
-            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
                 binding.title.setText("无权限...");
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
-                    requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_EXTERNAL_STORAGE}, 10086);
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
+                    requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 10086);
                 } else {
 
                 }
-            } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
                 binding.title.setText("无权限...");
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.SEND_SMS)) {
-                    requestPermissions(new String[]{Manifest.permission.SEND_SMS, Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS, Manifest.permission.READ_EXTERNAL_STORAGE}, 10086);
+                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
+                    requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 10086);
                 } else {
 
                 }
@@ -129,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         // For the requestCode, check if permission was granted or not.
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 10086) {//permissions[0].equalsIgnoreCase(Manifest.permission.SEND_SMS) &&
+        if (requestCode == 10086) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission was granted. Enable sms button.
                 smsHelper = SmsHelper.create(this, smsContent -> {

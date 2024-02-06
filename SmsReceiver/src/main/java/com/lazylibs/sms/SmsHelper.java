@@ -16,8 +16,8 @@ public class SmsHelper implements ServiceConnection {
     private Handler mHandler;
     private AlertDialog mNewVersionDialog;
     private SmsService mSmsService;
-    private boolean isInitialization = false;
-    SmsReceivedHandler smsReceivedHandler;
+    private boolean mIsInitialization = false;
+    SmsReceivedHandler mSmsReceivedHandler;
 
     public static SmsHelper create(@NonNull Activity context, SmsReceivedHandler smsReceivedHandler) {
         return new SmsHelper(context, smsReceivedHandler).bindService();
@@ -41,7 +41,7 @@ public class SmsHelper implements ServiceConnection {
 
     private SmsHelper(@NonNull Activity context, SmsReceivedHandler smsReceivedHandler) {
         this.mContext = context;
-        this.smsReceivedHandler = smsReceivedHandler;
+        this.mSmsReceivedHandler = smsReceivedHandler;
     }
 
     private SmsHelper bindService() {
@@ -52,12 +52,12 @@ public class SmsHelper implements ServiceConnection {
     }
 
     private boolean unbindService() {
-        if (!isInitialization) {
+        if (!mIsInitialization) {
             return false;
         }
         if (mSmsService != null) {
             mContext.unbindService(this);
-            isInitialization = false;
+            mIsInitialization = false;
         }
         return true;
     }
@@ -65,8 +65,8 @@ public class SmsHelper implements ServiceConnection {
     @Override
     public void onServiceConnected(ComponentName name, IBinder binder) {
         mSmsService = ((SmsService.SmsBinder) binder).getService();
-        isInitialization = true;
-        mSmsService.startSmsObserver(smsReceivedHandler);
+        mIsInitialization = true;
+        mSmsService.startSmsObserver(mSmsReceivedHandler);
     }
 
     @Override

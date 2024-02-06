@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.RECEIVE_SMS" />
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
+    <!-- 接收开机完成广播的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
 
     <application
         android:name="com.lazylibs.sms.App"
@@ -30,8 +30,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <service android:name=".SmsService" />
-        <receiver android:name=".SmsReceiver" />
+
+        <service
+            android:name="com.lazylibs.sms.SmsService"
+            android:enabled="true"
+            android:exported="true"
+            android:stopWithTask="false" />
+
+        <service
+            android:name="com.lazylibs.sms.ScreeningService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.BIND_SCREENING_SERVICE"
+            android:stopWithTask="false">
+            <intent-filter>
+                <action android:name="android.telecom.CallScreeningService" />
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

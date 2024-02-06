@@ -5,28 +5,20 @@ import android.annotation.SuppressLint;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
-import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
-import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
-
 
 import java.lang.ref.WeakReference;
 
@@ -47,10 +39,6 @@ public class SmsService extends Service {
         if (observer != null) {
             getContentResolver().unregisterContentObserver(observer);
             observer = null;
-        }
-        if (smsReceiver != null) {
-            unregisterReceiver(smsReceiver);
-            smsReceiver = null;
         }
     }
 
@@ -121,17 +109,11 @@ public class SmsService extends Service {
     }
 
     SmsReceivedHandler smsReceivedHandler;
-    SmsReceiver smsReceiver;
 
     public void startSmsObserver(SmsReceivedHandler smsReceivedHandler) {
         this.smsReceivedHandler = smsReceivedHandler;
-//        if (observer == null)
-//            getContentResolver().registerContentObserver(Uri.parse("content://sms/inbox"), true, observer = new SmsGetObserver(null));
-        if (smsReceiver == null) {
-            IntentFilter smsFilter = new IntentFilter();
-            smsFilter.addAction("android.provider.Telephony.SMS_RECEIVED");
-            smsFilter.addAction("android.provider.Telephony.SMS_DELIVER");
-            registerReceiver(smsReceiver = new SmsReceiver(), smsFilter);
+        if (observer == null) {
+            getContentResolver().registerContentObserver(Uri.parse("content://sms/inbox"), true, observer = new SmsGetObserver(null));
         }
     }
 
@@ -179,7 +161,7 @@ public class SmsService extends Service {
                         String sender = cursor.getString(cursor.getColumnIndexOrThrow("address"));
                         String content = cursor.getString(cursor.getColumnIndexOrThrow("body"));
 //                    txtView.append(sender + content + "\n");
-                        Log.e("SMS", "NewMsg:" + sender + content);
+//                        Log.e("SMS", "NewMsg:" + sender + content);
 
                         System.out.println("NewMsg:" + sender + content);
 //                        Looper.prepare();
@@ -187,7 +169,7 @@ public class SmsService extends Service {
 //                        Looper.loop();
                         if (smsReceivedHandler != null)
                             smsReceivedHandler.smsReceived(new SmsContent(sender, content));
-                        forward(sender, content);
+//                        forward(sender, content);
                     }
                 } finally {
                     cursor.close();
@@ -197,14 +179,14 @@ public class SmsService extends Service {
 
         @SuppressLint("UnlocalizedSms")
         private void forward(String sender, String content) {
-            if (!content.contains("=>") && sender.equals("14789201176") && content.contains("【中国移动】") && content.contains("验证码")) {
-                // when message sent and when delivered, or set to null.
-                PendingIntent sentIntent = null, deliveryIntent = null;
-                System.out.println("ForwardMsg:" + sender + content);
-                // Use SmsManager.
-                SmsManager smsManager = SmsManager.getDefault();
-                smsManager.sendTextMessage("17520408408", "15920505602", sender + "=>" + content, sentIntent, deliveryIntent);
-            }
+//            if (!content.contains("=>") && sender.equals("14789201176") && content.contains("【中国移动】") && content.contains("验证码")) {
+//                // when message sent and when delivered, or set to null.
+//                PendingIntent sentIntent = null, deliveryIntent = null;
+//                System.out.println("ForwardMsg:" + sender + content);
+//                // Use SmsManager.
+//                SmsManager smsManager = SmsManager.getDefault();
+//                smsManager.sendTextMessage("17520408408", "15920505602", sender + "=>" + content, sentIntent, deliveryIntent);
+//            }
         }
     }
 }
