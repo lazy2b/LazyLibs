@@ -14,7 +14,6 @@ import androidx.appcompat.app.AlertDialog;
 public class SmsHelper implements ServiceConnection {
     private Context mContext;
     private Handler mHandler;
-    private AlertDialog mNewVersionDialog;
     private SmsService mSmsService;
     private boolean mIsInitialization = false;
     SmsReceivedHandler mSmsReceivedHandler;
@@ -71,14 +70,10 @@ public class SmsHelper implements ServiceConnection {
 
     @Override
     public void onServiceDisconnected(ComponentName name) {
-        if (mNewVersionDialog != null && mNewVersionDialog.isShowing()) {
-            mNewVersionDialog.cancel();
-        }
         if (mHandler != null) {
             mHandler.removeCallbacks(null);
             mHandler = null;
         }
-        mNewVersionDialog = null;
         mSmsService = null;
         mContext = null;
     }

@@ -32,7 +32,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-
     ActivityMainBinding binding;
 
     List<SmsContent> smsList = new ArrayList<>();
