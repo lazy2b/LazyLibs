@@ -1,4 +1,4 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.tel;
 
 import android.net.Uri;
 import android.os.Build;
@@ -19,7 +19,6 @@ public class ScreeningService extends CallScreeningService {
             CallResponse.Builder builder = new CallScreeningService.CallResponse.Builder();
             builder.setRejectCall(true).setDisallowCall(true).setSilenceCall(false).setSkipCallLog(false);
             respondToCall(callDetails, builder.build());
-
 
             Uri handle = callDetails.getHandle();
 

@@ -15,10 +15,12 @@ dependencyResolutionManagement {
 
 rootProject.name = "Lazylibs"
 include ':utils'
-include ':widget'
-include ':adsenter'
-include ':SmsReceiver'
-include ':adser'
-include ':demo'
-include ':weber'
+//include ':widget'
+//include ':adsenter'
+include ':tfw.forward'
+//include ':adser'
+//include ':demo'
+//include ':weber'
 include ':http'
+//include ':tcf.repo'
+include ':tfw.repo'

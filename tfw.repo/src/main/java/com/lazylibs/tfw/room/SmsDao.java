@@ -1,5 +1,6 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.room;
 
+import androidx.annotation.Nullable;
 import androidx.room.Dao;
 import androidx.room.Database;
 import androidx.room.Delete;
@@ -11,21 +12,28 @@ import java.util.List;
 
 @Dao
 public interface SmsDao {
-    @Query("SELECT * FROM sms")
+    @Query("SELECT * FROM sms_content")
     List<SmsContent> getAll();
 
-    @Query("SELECT * FROM sms WHERE smid IN (:smids)")
-    List<SmsContent> loadAllByIds(int[] smids);
+    @Query("SELECT * FROM sms_content WHERE id IN (:ids)")
+    List<SmsContent> loadAllByIds(int[] ids);
 
 //    @Query("SELECT * FROM sms WHERE first_name LIKE :first AND " +
 //            "last_name LIKE :last LIMIT 1")
 //    SmsContent findByName(String first, String last);
 
     @Insert
-    void insertAll(SmsContent... sms);
+    Long insert(SmsContent sms);
+
+    @Insert
+    List<Long> insertAll(List<SmsContent> sms);
 
     @Delete
-    void delete(SmsContent sms);
+    int delete(SmsContent sms);
+
+    @Query("select * from sms_content where id = :id")
+    @Nullable
+    SmsContent findById(int id);
 }
 
 

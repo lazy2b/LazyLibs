@@ -3,15 +3,22 @@ plugins {
 }
 
 android {
-    namespace 'com.lazylibs.sms'
+    namespace 'com.lazylibs.tfw.forward'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.lazylibs.sms"
+        applicationId "com.lazylibs.tfw.forward"
         minSdk 29
         targetSdk 33
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildFeatures {
         viewBinding true
@@ -27,16 +34,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+//    testOptions{
+//        unitTests.returnDefaultValues = true
+//    }
 }
 
 dependencies {
     implementation project(':http')
     implementation project(':utils')
-
-    def room_version = "2.6.1"
-
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    implementation project(':tfw.repo')
+    testImplementation 'junit:junit:4.12'
 
     implementation 'com.alibaba:fastjson:1.1.73.android'
     implementation 'com.squareup.okhttp3:okhttp:4.10.0'
@@ -44,4 +52,14 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
+
+    // Test
+//    testImplementation 'junit:junit:4.13.2'、
+    // To use the androidx.test.core APIs
+    androidTestImplementation "androidx.test:core:1.5.0"
+    // To use the androidx.test.runner APIs
+    androidTestImplementation "androidx.test:runner:1.5.2"
+    // To use the JUnit Extension APIs
+    androidTestImplementation "androidx.test.ext:junit:1.1.5"
+    androidTestImplementation "androidx.test:rules:1.5.0"
 }

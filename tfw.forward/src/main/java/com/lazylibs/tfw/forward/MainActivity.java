@@ -1,4 +1,4 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.forward;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -22,8 +22,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import com.lazylibs.sms.databinding.ActivityMainBinding;
-import com.lazylibs.sms.databinding.TplMsgItemBinding;
+import com.lazylibs.tfw.sms.SmsHelper;
+import com.lazylibs.tfw.forward.databinding.ActivityMainBinding;
+import com.lazylibs.tfw.forward.databinding.TplMsgItemBinding;
+import com.lazylibs.tfw.room.SmsContent;
 import com.lazylibs.utils.cache.Cache;
 
 import java.util.ArrayList;

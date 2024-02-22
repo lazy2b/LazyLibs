@@ -1,4 +1,4 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.room;
 
 import androidx.room.Database;
 import androidx.room.RoomDatabase;

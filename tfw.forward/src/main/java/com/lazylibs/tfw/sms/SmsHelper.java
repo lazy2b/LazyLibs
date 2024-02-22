@@ -1,4 +1,4 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.sms;
 
 import android.app.Activity;
 import android.content.ComponentName;
@@ -9,7 +9,8 @@ import android.os.Handler;
 import android.os.IBinder;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
+
+import com.lazylibs.tfw.forward.App;
 
 public class SmsHelper implements ServiceConnection {
     private Context mContext;

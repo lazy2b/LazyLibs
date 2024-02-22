@@ -14,7 +14,7 @@
 
 
     <application
-        android:name="com.lazylibs.sms.App"
+        android:name=".App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -22,7 +22,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Vbase">
         <activity
-            android:name="com.lazylibs.sms.MainActivity"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,7 +32,7 @@
         </activity>
 
         <service
-            android:name="com.lazylibs.sms.SmsService"
+            android:name="com.lazylibs.tfw.sms.SmsService"
             android:enabled="true"
             android:exported="true"
             android:stopWithTask="false" />

@@ -1,4 +1,4 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.sms;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -15,10 +15,13 @@ import android.os.Binder;
 import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
-import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+
+
+import com.lazylibs.tfw.forward.R;
+import com.lazylibs.tfw.room.SmsContent;
 
 import java.lang.ref.WeakReference;
 
@@ -42,6 +45,7 @@ public class SmsService extends Service {
         }
     }
 
+    @SuppressLint("ObsoleteSdkInt")
     void buildNotification() {
         if (mNotificationManager == null) {
             mNotificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -66,6 +70,8 @@ public class SmsService extends Service {
             mNotificationBuilder = new Notification.Builder(this, channel.getId());
         } else {
             mNotificationBuilder = new Notification.Builder(this);
+            mNotificationBuilder.setVibrate(null);
+            mNotificationBuilder.setSound(null);
         }
         mNotificationBuilder.setSmallIcon(R.mipmap.ic_launcher);  // the status icon
         mNotificationBuilder.setTicker(text);  // the status text
@@ -75,8 +81,6 @@ public class SmsService extends Service {
         mNotificationBuilder.setContentTitle("...1"); // the label of the entry
         mNotificationBuilder.setOngoing(true);
         mNotificationBuilder.setAutoCancel(true);
-        mNotificationBuilder.setVibrate(null);
-        mNotificationBuilder.setSound(null);
     }
 
 //    void updateNotification(int progress) {

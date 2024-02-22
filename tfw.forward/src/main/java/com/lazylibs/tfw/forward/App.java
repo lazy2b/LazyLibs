@@ -1,8 +1,10 @@
-package com.lazylibs.sms;
+package com.lazylibs.tfw.forward;
 
 import android.app.Application;
 import android.content.Context;
 
+import com.lazylibs.tfw.sms.SmsHelper;
+import com.lazylibs.tfw.room.RoomHelper;
 import com.lazylibs.utils.Lazier;
 import com.lazylibs.utils.Logger;
 import com.lazylibs.utils.cache.Cache;
@@ -20,6 +22,7 @@ public class App extends Application {
                 return App.this;
             }
         });
+        RoomHelper.onCreate(this);
         SmsHelper.startServer(this);
     }
 
@@ -28,6 +31,7 @@ public class App extends Application {
         super.onTerminate();
         Cache.onTerminate();
         Lazier.onTerminate();
+        RoomHelper.onTerminate(this);
         SmsHelper.stopServer(this);
     }
 }
