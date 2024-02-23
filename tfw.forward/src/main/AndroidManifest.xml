@@ -8,10 +8,9 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_SMS" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <!-- 接收开机完成广播的权限 -->
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
-
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 接收开机完成广播的权限 -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:name=".App"
@@ -20,9 +19,21 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.Vbase">
+        android:theme="@style/Theme.Lazylibs">
+<!--        <activity-->
+<!--            android:name=".BottomNavActivity"-->
+<!--            android:exported="true"-->
+<!--            android:theme="@style/Theme.Lazylibs.NoActionBar"-->
+<!--            android:label="@string/title_activity_bottom_nav" >-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
+
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
+<!--        </activity>-->
         <activity
             android:name=".MainActivity"
+            android:theme="@style/Theme.Lazylibs.NoActionBar"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,23 +42,21 @@
             </intent-filter>
         </activity>
 
-        <service
-            android:name="com.lazylibs.tfw.sms.SmsService"
-            android:enabled="true"
-            android:exported="true"
-            android:stopWithTask="false" />
-
-        <service
-            android:name="com.lazylibs.sms.ScreeningService"
-            android:enabled="true"
-            android:exported="true"
-            android:permission="android.permission.BIND_SCREENING_SERVICE"
-            android:stopWithTask="false">
-            <intent-filter>
-                <action android:name="android.telecom.CallScreeningService" />
-            </intent-filter>
-        </service>
-
+<!--        <service-->
+<!--            android:name="com.lazylibs.tfw.sms.SmsService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"-->
+<!--            android:stopWithTask="false" />-->
+<!--        <service-->
+<!--            android:name="com.lazylibs.tfw.tel.ScreeningService"-->
+<!--            android:enabled="true"-->
+<!--            android:exported="true"-->
+<!--            android:permission="android.permission.BIND_SCREENING_SERVICE"-->
+<!--            android:stopWithTask="false">-->
+<!--            <intent-filter>-->
+<!--                <action android:name="android.telecom.CallScreeningService" />-->
+<!--            </intent-filter>-->
+<!--        </service>-->
     </application>
 
 </manifest>

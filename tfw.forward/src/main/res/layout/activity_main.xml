@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ViewFlipper xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/vf_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/forward_list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+    android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/title"
+        android:id="@+id/tv_no_permission"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:background="@color/design_default_color_primary"
         android:gravity="center"
-        android:text="消息转发中..."
-        android:textColor="@color/white" />
+        android:text="缺少必要权限\n点击获取"
+        android:textSize="14dp"
+        android:textStyle="bold" />
 
-</androidx.appcompat.widget.LinearLayoutCompat>
+</ViewFlipper>
+
+
+    <!--<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical"-->
+    <!--tools:context=".MainActivity">-->
+
+    <!--<androidx.recyclerview.widget.RecyclerView-->
+    <!--    android:id="@+id/forward_list"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="0dp"-->
+    <!--    android:layout_weight="1"-->
+    <!--    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
+
+    <!--<TextView-->
+    <!--    android:id="@+id/title"-->
+    <!--    android:layout_width="match_parent"-->
+    <!--    android:layout_height="40dp"-->
+    <!--    android:layout_gravity="center"-->
+    <!--    android:background="@color/design_default_color_primary"-->
+    <!--    android:gravity="center"-->
+    <!--    android:text="消息转发中..."-->
+    <!--    android:textColor="@color/white" />-->
+
+    <!--</androidx.appcompat.widget.LinearLayoutCompat>-->

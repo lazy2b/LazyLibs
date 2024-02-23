@@ -166,7 +166,6 @@ public class SmsService extends Service {
                         String content = cursor.getString(cursor.getColumnIndexOrThrow("body"));
 //                    txtView.append(sender + content + "\n");
 //                        Log.e("SMS", "NewMsg:" + sender + content);
-
                         System.out.println("NewMsg:" + sender + content);
 //                        Looper.prepare();
 //                        Toast.makeText(getApplicationContext(), sender + content, Toast.LENGTH_LONG).show();

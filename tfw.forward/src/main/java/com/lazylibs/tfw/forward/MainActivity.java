@@ -2,14 +2,19 @@ package com.lazylibs.tfw.forward;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.role.RoleManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
@@ -22,10 +27,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import com.lazylibs.tfw.forward.databinding.TplTfwMainBinding;
 import com.lazylibs.tfw.sms.SmsHelper;
 import com.lazylibs.tfw.forward.databinding.ActivityMainBinding;
 import com.lazylibs.tfw.forward.databinding.TplMsgItemBinding;
 import com.lazylibs.tfw.room.SmsContent;
+import com.lazylibs.tfw.sms.SmsItemViewHolder;
 import com.lazylibs.utils.cache.Cache;
 
 import java.util.ArrayList;
@@ -36,22 +43,16 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding binding;
 
-    List<SmsContent> smsList = new ArrayList<>();
-    RecyclerView.Adapter<SmsItemViewHolder> adapter;
+    private void v2TelFw() {
+        TplTfwMainBinding tfwMainBinding = TplTfwMainBinding.inflate(getLayoutInflater());
+        binding.vfMain.addView(tfwMainBinding.getRoot());
+        binding.vfMain.showNext();
+    }
 
-    static class SmsItemViewHolder extends RecyclerView.ViewHolder {
-        TplMsgItemBinding binding;
-
-        public SmsItemViewHolder(TplMsgItemBinding binding) {
-            super(binding.getRoot());
-            this.binding = binding;
-        }
-
-        void bind(SmsContent smsContent) {
-            binding.tvSender.setText(smsContent.sender);
-            binding.tvContent.setText(smsContent.body);
-        }
-
+    private void v2UnPermission() {
+        binding.tvNoPermission.setOnClickListener(view -> {
+            checkForSmsPermission();
+        });
     }
 
     @Override
@@ -59,133 +60,88 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-        // Check to see if SMS is enabled.
-        checkForSmsPermission();
-        String cache = Cache.get("smsList");
-        if (!TextUtils.isEmpty(cache)) {
-            smsList = JSON.parseObject(Cache.get("smsList"), new TypeReference<List<SmsContent>>() {
-            });
-        }
-        binding.forwardList.setAdapter(adapter = new RecyclerView.Adapter<SmsItemViewHolder>() {
-            @NonNull
-            @Override
-            public SmsItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-                return new SmsItemViewHolder(TplMsgItemBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false));
-            }
-
-            @Override
-            public void onBindViewHolder(@NonNull SmsItemViewHolder holder, int position) {
-                holder.bind(smsList.get(position));
-            }
-
-            @Override
-            public int getItemCount() {
-                return smsList.size();
+        roleManager = (RoleManager) getSystemService(ROLE_SERVICE);
+        callScreeningLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+            if (result.getResultCode() == android.app.Activity.RESULT_OK) {
+                v2TelFw();
+            } else {
+                Toast.makeText(MainActivity.this, "权限获取失败！", Toast.LENGTH_SHORT).show();
+                v2UnPermission();
             }
         });
-//        binding.forwardList.setHasFixedSize(true);
-    }
-
-    private static final int REQUEST_ID = 1;
-
-    public void requestRole() {
-        RoleManager roleManager = (RoleManager) getSystemService(ROLE_SERVICE);
-        Intent intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING);
-        ActivityResultLauncher<Intent> launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-            @Override
-            public void onActivityResult(ActivityResult result) {
-                //            if (resultCode == android.app.Activity.RESULT_OK) {
-//                // Your app is now the call screening app
-//            } else {
-//                // Your app is not the call screening app
-//            }
-            }
-        });
-        launcher.launch(intent);
-    }
-
-    /**
-     * Checks whether the app has SMS permission.
-     */
-    @SuppressLint("NotifyDataSetChanged")
-    private void checkForSmsPermission() {requestRole();
-        binding.title.setText("权限检测中...");
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED
-                && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED ) {
-            smsHelper = SmsHelper.create(this, smsContent -> {
-                smsList.add(smsContent);
-                Cache.put("smsList", JSON.toJSONString(smsList));
-                runOnUiThread(() -> {
-                    if (adapter != null) {
-                        adapter.notifyDataSetChanged();
-                    }
-                });
-            });
-            binding.title.setText("监听中...");
-            binding.title.setOnClickListener(null);
-        } else {
+        settingsLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
-                binding.title.setText("无权限...");
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
-                    requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 10086);
-                } else {
+                Toast.makeText(MainActivity.this, "权限获取失败！", Toast.LENGTH_SHORT).show();
+                v2UnPermission();
+            } else {
+                checkForCallScreeningPermission();
+            }
+        });
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) != PackageManager.PERMISSION_GRANTED) {
+            checkForSmsPermission();
+            return;
+        }
+        RoleManager roleManager = (RoleManager) getSystemService(ROLE_SERVICE);
+        if (!roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)) {
+            checkForCallScreeningPermission();
+            return;
+        }
+        callScreeningLauncher = null;
+        settingsLauncher = null;
+        v2TelFw();
+    }
 
-                }
-            } else if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-                binding.title.setText("无权限...");
-                if (!ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)) {
-                    requestPermissions(new String[]{Manifest.permission.READ_SMS, Manifest.permission.READ_PHONE_STATE}, 10086);
-                } else {
+    RoleManager roleManager;
+    ActivityResultLauncher<Intent> callScreeningLauncher, settingsLauncher;
 
-                }
+    private void checkForCallScreeningPermission() {
+        if (roleManager.isRoleHeld(RoleManager.ROLE_CALL_SCREENING)) {
+            v2TelFw();
+        } else {
+            callScreeningLauncher.launch(roleManager.createRequestRoleIntent(RoleManager.ROLE_CALL_SCREENING));
+        }
+    }
+
+    public static final int REQUEST_READ_SMS_PERMISSION = 10086;
+
+    @SuppressLint("NotifyDataSetChanged")
+    private void checkForSmsPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_SMS) == PackageManager.PERMISSION_GRANTED) {
+            checkForCallScreeningPermission();//  替换电话接听软件
+        } else {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_SMS)) {
+                // TODO 弹窗解释一下子再获取
+                requestPermissions(new String[]{Manifest.permission.READ_SMS}, REQUEST_READ_SMS_PERMISSION);
+            } else {
+                AlertDialog alertDialog = new AlertDialog.Builder(this).setTitle("权限设置").setMessage("应用缺乏必要的权限，是否前往手动授予该权限？").setPositiveButton("前往", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        settingsLauncher.launch(new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.parse("package:" + getPackageName())));
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        Toast.makeText(MainActivity.this, "权限获取失败！", Toast.LENGTH_SHORT).show();
+                        v2UnPermission();
+                    }
+                }).create();
+                alertDialog.show();
             }
         }
     }
 
-    /**
-     * Processes permission request codes.
-     *
-     * @param requestCode  The request code passed in requestPermissions()
-     * @param permissions  The requested permissions. Never null.
-     * @param grantResults The grant results for the corresponding permissions
-     *                     which is either PERMISSION_GRANTED or PERMISSION_DENIED. Never null.
-     */
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         // For the requestCode, check if permission was granted or not.
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == 10086) {
+        if (requestCode == REQUEST_READ_SMS_PERMISSION) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission was granted. Enable sms button.
-                smsHelper = SmsHelper.create(this, smsContent -> {
-                    smsList.add(smsContent);
-                    Cache.put("smsList", JSON.toJSONString(smsList));
-                    runOnUiThread(() -> {
-                        if (adapter != null) {
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
-                });
-                binding.title.setText("监听中...");
-                binding.title.setOnClickListener(null);
+                checkForCallScreeningPermission();
             } else {
-                binding.title.setText("权限被拒...点击重新获取");
-                binding.title.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        checkForSmsPermission();
-                    }
-                });
+                Toast.makeText(this, "权限获取失败！", Toast.LENGTH_SHORT).show();
+                v2UnPermission();
             }
         }
-    }
-
-    SmsHelper smsHelper;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        SmsHelper.destroy(smsHelper);
     }
 }

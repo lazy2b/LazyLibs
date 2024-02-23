@@ -4,12 +4,12 @@ plugins {
 
 android {
     namespace 'com.lazylibs.tfw.forward'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.lazylibs.tfw.forward"
         minSdk 29
-        targetSdk 33
+        targetSdk 34
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -44,6 +44,10 @@ dependencies {
     implementation project(':http')
     implementation project(':utils')
     implementation project(':tfw.repo')
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.7.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0'
+    implementation 'androidx.navigation:navigation-fragment:2.6.0'
+    implementation 'androidx.navigation:navigation-ui:2.6.0'
     testImplementation 'junit:junit:4.12'
 
     implementation 'com.alibaba:fastjson:1.1.73.android'
